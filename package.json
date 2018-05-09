@@ -1,17 +1,21 @@
 {
-  "name": "00-locomanager",
-  "version": "0.0.0",
-  "private": true,
+  "name": "createproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "shaheryar",
+  "license": "ISC",
   "dependencies": {
-    "cookie-parser": "~1.4.3",
-    "debug": "^2.6.9",
+    "@ionic/app-scripts": "^3.1.6",
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "http-errors": "~1.6.2",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.0",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "ws": "3.3.2"
   }
 }

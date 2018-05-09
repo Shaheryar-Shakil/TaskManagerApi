@@ -1,75 +1,63 @@
 var mysql = require('mysql');
-var express = require('express');
-var app = express();
+var express=require('express');
+var admin=require('./Admin/GetAllUsers');
+var app=express();
 
+
+
+
+var project=require('./Project/ProjectRoute');                                  //Getting project Route
+var task=require('./Task/TaskRoute');                                          //Getting task Route
+var person=require('./person/PersonRoute');                                   //Getting person Route
+var team=require('./Team/TeamRoute');                                        //Getting team Route
+var teamMember=require('./TeamMembers/TeamMemberRoute');                    //Getting team Route
+
+
+
+var path =require('path');
+var bodyParser = require('body-parser');
+
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine','pug');
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "SampleDB"
+    database:"Teammanager"
 });
+
 
 con.connect(function(err) {
-    if (err) {
-        console.log("Error\n" +  err);
-    }
-    else{
+    if (!err) {
         console.log("Connected!");
+
+    } else {
+        console.log(err);
     }
 });
 
-app.get('/', function(req, res){
-    con.query("SELECT * FROM SampleTable", function(err, rows, fields) {
-        if(!!err) {
-            console.log('Error in query');
-        } else {
-            console.log('Successful query');
-        }
-    });
+
+app.use('/project',project);
+app.use('/task',task);
+app.use('/person',person);
+app.use('/team',team);
+app.use('/teamMember',teamMember);
+
+
+
+app.get('/',(req,res)=>{
+    res.send('hello');
 });
 
-app.listen(1337);
 
-/*
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
-var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+
+app.listen(5000,function() {
+    console.log("connection Created");
 });
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
-*/
